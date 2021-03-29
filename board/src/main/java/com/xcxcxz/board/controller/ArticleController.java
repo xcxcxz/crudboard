@@ -87,6 +87,16 @@ public class ArticleController {
 		redirectAttributes.addFlashAttribute("msg", "delSuccess");
 		return "redirect:/article/list";
 	}
+	@RequestMapping(value = "/listPaging", method = RequestMethod.GET)
+	public String listPaging(Model model, Criteria criteria) throws Exception {
+		logger.info("listPaging ...");
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCriteria(criteria);
+		pageMaker.setTotalCount(articleService.countArticles(criteria));
+		model.addAttribute("articles", articleService.listCriteria(criteria));
+		model.addAttribute("pageMaker", pageMaker);
+		return "/article/listpaging";
+	}
 	
 	
 

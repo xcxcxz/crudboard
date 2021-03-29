@@ -22,38 +22,38 @@
 	<![CDATA[SELECT article_no, title, content, writer, regdate, viewcnt FROM article WHERE article_no > 0 ORDER BY article_no DESC, regdate DESC WHERE #{page} <=10]]>
 	</select>
 	<select id="listCriteria" resultMap="ArticleResultMap"> 
-	<![CDATA[SELECT article_no, title, content, writer, regdate, viewcnt FROM (SELECT ROW_NUMBER() OVER (ORDER BY article_no DESC, regdate DESC) NUM, A.* FROM article A ORDER BY article_no DESC, regdate DESC) WHERE NUM BETWEEN #{pageStart} +1 AND #{pageStart} + 10]]>
+	<![CDATA[SELECT article_no, title, content, writer, regdate, viewcnt FROM (SELECT ROW_NUMBER() OVER (ORDER BY article_no DESC, regdate DESC) NUM, A.* FROM article A ORDER BY article_no DESC, regdate DESC) WHERE NUM BETWEEN #{pageStart} AND #{pageStart}]]>
 	</select>
 	<select id="countArticles" resultType="int"> <![CDATA[ SELECT COUNT(article_no) FROM article WHERE article_no > 0 ]]>
 	</select>
-	<select id="listSearch" resultMap="ArticleResultMap"> <![CDATA[ SELECT article_no, title, content, writer, regdate, viewcnt FROM article WHERE article_no > 0 ]]>
-		<include refid="search" /> <![CDATA[BETWEEN #{pageStart} + 1 AND #{perPageNum} +10 ORDER BY article_no DESC, regdate DESC]]>
-	</select>
-	<select id="countSearchedArticles" resultType="int"> <![CDATA[ SELECT COUNT(article_no) FROM article WHERE article_no > 0 ]]>
-		<include refid="search" />
-	</select>
-	<sql id="search">
-		<if test="searchType != null">
-			<if test="searchType == 't'.toString()"> AND title LIKE CONCAT('%', #{keyword}, '%') </if>
-			<if test="searchType == 'c'.toString()"> AND content LIKE CONCAT('%', #{keyword}, '%') </if>
-			<if test="searchType == 'w'.toString()"> AND writer LIKE CONCAT('%', #{keyword}, '%') </if>
-			<if test="searchType == 'tc'.toString()"> AND ( title LIKE CONCAT('%', #{keyword}, '%') OR content
-				LIKE CONCAT('%', #{keyword}, '%') ) </if>
-			<if test="searchType == 'cw'.toString()"> AND ( content LIKE CONCAT('%', #{keyword}, '%') OR
-				writer LIKE CONCAT('%', #{keyword}, '%') ) </if>
-			<if test="searchType == 'tcw'.toString()"> AND ( title LIKE CONCAT('%', #{keyword}, '%') OR content
-				LIKE CONCAT('%', #{keyword}, '%') OR writer LIKE CONCAT('%',
-				#{keyword}, '%') ) </if>
-		</if>
-	</sql>
+	<select id="listSearch" resultMap="ArticleResultMap">
+		<![CDATA[SELECT article_no, title, content, writer, regdate, viewcnt FROM (SELECT ROW_NUMBER() OVER (ORDER BY article_no DESC, regdate DESC) NUM, A.* FROM article A ORDER BY article_no DESC, regdate DESC)]]> <include refid="search" /> <![CDATA[WHERE NUM BETWEEN #{pageStart} +1 AND #{pageStart} + 10]]>
+		</select>
+		<select id="countSearchedArticles" resultType="int"> <![CDATA[ SELECT COUNT(article_no) FROM article WHERE article_no > 0 ]]>
+			<include refid="search" />
+		</select>
+		<sql id="search">
+			<if test="searchType != null">
+				<if test="searchType == 't'.toString()">AND TITLE LIKE '%' || #{keyword} || '%'</if>
+				<if test="searchType == 'c'.toString()">AND CONTENT LIKE '%' || #{keyword} || '%'</if>
+				<if test="searchType == 'w'.toString()">AND WRITER LIKE '%' || #{keyword} || '%'</if>
+				<if test="searchType == 'tc'.toString()">AND (TITLE LIKE '%' || #{keyword} || '%') or (CONTENT
+					LIKE '%' || #{keyword} || '%')</if>
+				<if test="searchType == 'cw'.toString()">AND (content LIKE '%' || #{keyword} || '%') or (writer
+					LIKE '%' || #{keyword} || '%')</if>
+				<if test="searchType == 'tcw'.toString()">AND (title LIKE '%' || #{keyword} || '%') or (content
+					LIKE '%' || #{keyword} || '%') or (writer LIKE '%' || #{keyword} ||
+					'%')</if>
+			</if>
+		</sql>
 
-	<resultMap id="ArticleResultMap" type="ArticleVO">
-		<id property="article_no" column="article_no" />
-		<result property="title" column="title" />
-		<result property="content" column="content" />
-		<result property="writer" column="writer" />
-		<result property="regDate" column="regdate" />
-		<result property="viewCnt" column="viewcnt" />
-	</resultMap>
+		<resultMap id="ArticleResultMap" type="ArticleVO">
+			<id property="article_no" column="article_no" />
+			<result property="title" column="title" />
+			<result property="content" column="content" />
+			<result property="writer" column="writer" />
+			<result property="regDate" column="regdate" />
+			<result property="viewCnt" column="viewcnt" />
+		</resultMap>
 </mapper>
 

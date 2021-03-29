@@ -53,6 +53,17 @@ public class ArticlePagingController {
 		return "article/paging/list";
 	}
 
+	@RequestMapping(value = "/listPaging", method = RequestMethod.GET)
+	public String listPaging(Model model, Criteria criteria) throws Exception {
+		logger.info("listPaging ...");
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCriteria(criteria);
+		pageMaker.setTotalCount(articleService.countArticles(criteria));
+		model.addAttribute("articles", articleService.listCriteria(criteria));
+		model.addAttribute("pageMaker", pageMaker);
+		return "/article/listpaging";
+	}
+
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public String read(@RequestParam("article_no") int article_no, @ModelAttribute("criteria") Criteria criteria,
 			Model model) throws Exception {
