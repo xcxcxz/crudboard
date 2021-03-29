@@ -44,6 +44,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 			<div class="content">
 				<div class="container-fluid">
 					<div class="col-lg-12">
+					
 						<div class="card">
 							<div class="card-header">
 								<h3 class="card-title">게시글 목록</h3>
@@ -56,7 +57,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 											<th>제목</th>
 											<th style="width: 100px">작성자</th>
 											<th style="width: 150px">작성시간</th>
-											<th style="width: 60px">조회</th>
+											<th style="width: 70px">조회</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -64,7 +65,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 											<tr>
 												<td>${article.article_no}</td>
 												<td><a
-													href="${path}/article/paging/search/read${pageMaker.makeSearch(pageMaker.criteria.page)}&articleNo=${article.articleNo}">
+													href="${path}/article/paging/search/read${pageMaker.makeSearch(pageMaker.criteria.page)}&article_no=${article.article_no}">
 														${article.title} </a></td>
 
 												<td>${article.writer}</td>
@@ -76,38 +77,32 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									</tbody>
 								</table>
 							</div>
+							
 							<div class="card-footer">
-								<div class="float-right">
-									<button type="button" class="btn btn-success btn-flat"
-										id="writeBtn">
-										<i class="fa fa-pencil"></i> 글쓰기
-									</button>
-								</div>
-							</div>
-							<div class="card-footer">
-								<div class="text-center">
-									<ul class="pagination">
+								<nav aria-label="Contacts Page Navigation">
+									<ul class="pagination justify-content-center m-0">
 										<c:if test="${pageMaker.prev}">
-											<li><a
+											<li class="page-item"><a
 												href="${path}/article/paging/search/list${pageMaker.makeSearch(pageMaker.startPage - 1)}">이전</a></li>
 										</c:if>
 										<c:forEach begin="${pageMaker.startPage}"
 											end="${pageMaker.endPage}" var="idx">
-											<li
+											<li class="page-item"
 												<c:out value="${pageMaker.criteria.page == idx ? 'class=active' : ''}"/>>
-												<a
+												<a class="page-link"
 												href="${path}/article/paging/search/list${pageMaker.makeSearch(idx)}">${idx}</a>
 											</li>
 										</c:forEach>
 										<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-											<li><a
+											<li class="page-item"><a
 												href="${path}/article/paging/search/list?${pageMaker.makeSearch(pageMaker.endPage + 1)}">다음</a></li>
 										</c:if>
 									</ul>
+									</nav>
 								</div>
 							</div>
 							<td>
-							<a href="${path}/article/paging/search/read${pageMaker.makeSearch(pageMaker.criteria.page)}&articleNo=${article.articleNo}">
+							<a href="${path}/article/paging/search/read${pageMaker.makeSearch(pageMaker.criteria.page)}&article_no=${article.article_no}">
 									${article.title} </a>
 									</td>
 
@@ -146,10 +141,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									</div>
 								</div>
 								<div class="float-right">
-									<button type="button" class="btn btn-success btn-flat"
+								<form role="form" id="list" method="get" action="${path}/article/write">
+									<button type="submit" class="btn btn-success btn-flat"
 										id="writeBtn">
 										<i class="fa fa-pencil"></i> 글쓰기
 									</button>
+									</form>
 								</div>
 							</div>
 

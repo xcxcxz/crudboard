@@ -74,14 +74,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									</tbody>
 								</table>
 							</div>
-							<div class="card-footer">
-								<div class="float-right">
-									<button type="button" class="btn btn-success btn-flat"
+							<div class="float-right">
+								<form role="form" id="list" method="get" action="${path}/article/write">
+									<button type="submit" class="btn btn-success btn-flat"
 										id="writeBtn">
 										<i class="fa fa-pencil"></i> 글쓰기
 									</button>
+									</form>
 								</div>
-							</div>
 							<div class="card-footer">
 								<nav aria-label="Contacts Page Navigation">
 									<ul class="pagination justify-content-center m-0">

@@ -78,7 +78,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									</tbody>
 								</table>
 							</div>
-							<div class="card-footer">
+							<div class="float-right">
 								<div class="float-right">
 									<button type="submit" class="btn btn-success btn-flat"
 										id="writeBtn">
