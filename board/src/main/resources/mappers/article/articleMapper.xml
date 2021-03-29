@@ -22,12 +22,15 @@
 	<![CDATA[SELECT article_no, title, content, writer, regdate, viewcnt FROM article WHERE article_no > 0 ORDER BY article_no DESC, regdate DESC WHERE #{page} <=10]]>
 	</select>
 	<select id="listCriteria" resultMap="ArticleResultMap"> 
-	<![CDATA[SELECT article_no, title, content, writer, regdate, viewcnt FROM (SELECT ROW_NUMBER() OVER (ORDER BY article_no DESC, regdate DESC) NUM, A.* FROM article A ORDER BY article_no DESC, regdate DESC) WHERE NUM BETWEEN #{pageStart} AND #{pageStart}]]>
+	SELECT article_no, title, content, writer, regdate, viewcnt 
+	FROM (SELECT article_no, title, content, writer, regdate, viewcnt ROW_NUMBER() OVER (ORDER BY article_no DESC, regdate DESC) AS RNUM
+	FROM article WHERE 1=1) 
+	AR WHERE RNUM BETWEEN #{pageStart} AND #{pageStart} ORDER BY article_no DESC, regdate DESC
 	</select>
 	<select id="countArticles" resultType="int"> <![CDATA[ SELECT COUNT(article_no) FROM article WHERE article_no > 0 ]]>
 	</select>
 	<select id="listSearch" resultMap="ArticleResultMap">
-		<![CDATA[SELECT article_no, title, content, writer, regdate, viewcnt FROM (SELECT ROW_NUMBER() OVER (ORDER BY article_no DESC, regdate DESC) NUM, A.* FROM article A ORDER BY article_no DESC, regdate DESC)]]> <include refid="search" /> <![CDATA[WHERE NUM BETWEEN #{pageStart} +1 AND #{pageStart} + 10]]>
+		SELECT article_no, title, content, writer, regdate, viewcnt FROM (SELECT article_no, title, content, writer, regdate, viewcnt, ROW_NUMBER() OVER (ORDER BY article_no DESC, regdate DESC) AS RNUM FROM article where 1=1 <include refid="search" />) art WHERE RNUM BETWEEN #{pageStart} AND #{pageStart}
 		</select>
 		<select id="countSearchedArticles" resultType="int"> <![CDATA[ SELECT COUNT(article_no) FROM article WHERE article_no > 0 ]]>
 			<include refid="search" />

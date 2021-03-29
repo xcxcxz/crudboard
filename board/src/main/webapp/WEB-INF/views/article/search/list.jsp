@@ -106,6 +106,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									</ul>
 								</div>
 							</div>
+							<td>
+							<a href="${path}/article/paging/search/read${pageMaker.makeSearch(pageMaker.criteria.page)}&articleNo=${article.articleNo}">
+									${article.title} </a>
+									</td>
 
 							<div class="card-footer">
 								<div class="row">
