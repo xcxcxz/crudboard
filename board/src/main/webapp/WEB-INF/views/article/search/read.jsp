@@ -67,11 +67,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 										<form role="form" method="post">
 											<input type="hidden" name="article_no"
 												value="${article.article_no}"> <input type="hidden"
-												name="page" value="${article.page}"> <input
+												name="page" value="${searchCriteria.page}"> <input
 												type="hidden" name="perPageNum"
-												value="${article.perPageNum}"> <input type="hidden"
-												name="searchType" value="${article.searchType}"> <input
-												type="hidden" name="keyword" value="${article.keyword}">
+												value="${searchCriteria.perPageNum}"> <input type="hidden"
+												name="searchType" value="${searchCriteria.searchType}"> <input
+												type="hidden" name="keyword" value="${searchCriteria.keyword}">
 										</form>
 										<button type="submit" class="btn btn-primary listBtn">
 											<i class="fa fa-list"></i> 목록

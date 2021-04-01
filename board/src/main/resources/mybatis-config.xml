@@ -7,6 +7,8 @@
     </settings>
 	<typeAliases>
 		<typeAlias type="com.xcxcxz.board.domain.ArticleVO" alias="ArticleVO" />
+		<typeAlias type="com.xcxcxz.board.domain.ReplyVO" alias="ReplyVO" />
+
 	</typeAliases>
 	 
 
